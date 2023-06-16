@@ -69,6 +69,16 @@ if (isset($_POST['save_student'])) {
         exit(0);
     }
 
+    // check if phone number already exists in the database
+    $existingPhoneQuery = "SELECT * FROM student WHERE phone = '$phone'";
+    $existingPhoneResult = mysqli_query($conn, $existingPhoneQuery);
+    if(mysqli_num_rows($existingPhoneResult) > 0){
+        $_SESSION['message'] = 'The student of this phone number already exist. Please choose another phone number.';
+        $_SESSION['message_type'] = 'error';
+        header("Location: index.php");
+        exit(0);
+    }
+
     // Insert new student record
     $sql = "INSERT INTO student (name, email, phone, course) VALUES ('$name', '$email', '$phone', '$course')";
 

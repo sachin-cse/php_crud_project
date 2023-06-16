@@ -15,8 +15,20 @@ include 'connection.php';
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="script.js"></script>
+    <script src="edit.js"></script>
 
     <title>Student Table</title>
+
+    <!-- for error style -->
+    <style>
+    .error {
+        color: red;
+        font-size: 0.8rem;
+    }
+    </style>
+    <!-- end for error style -->
+
 </head>
 
 <body>
@@ -35,26 +47,29 @@ include 'connection.php';
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="save_data.php" method="post">
+                        <form action="save_data.php" method="post" onsubmit="return validateForm()">
                             <div class="mb-3">
                                 <label>Student Name</label>
-                                <input type="text" name="name" class="form-control" required>
+                                <input type="text" name="name" class="form-control">
+                                <span id="nameError" class="error"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label>Student Email</label>
-                                <input type="email" name="email" class="form-control" required>
+                                <input type="text" name="email" class="form-control">
+                                <span id="emailError" class="error"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label>Student Contact</label>
-                                <input type="text" name="phone" class="form-control" minlength="10" maxlength="12"
-                                    required>
+                                <input type="text" name="phone" class="form-control">
+                                <span id="phoneError" class="error"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label>Student Course</label>
-                                <input type="text" name="course" class="form-control" required>
+                                <input type="text" name="course" class="form-control">
+                                <span id="courseError" class="error"></span>
                             </div>
 
                             <div class="mb-3">
@@ -192,7 +207,7 @@ include 'connection.php';
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="save_data.php" method="post">
+                                                <form action="save_data.php" method="post" onsubmit="return validateEditForm()">
 
                                                     <div class="mb-3">
                                                         <label>ID</label>
@@ -204,28 +219,33 @@ include 'connection.php';
                                                     <div class="mb-3">
                                                         <label>Student Name</label>
                                                         <input type="text" name="name" value="<?= $student['name']; ?>"
-                                                            class="form-control" required>
+                                                            class="form-control">
+                                                        <span id="editnameError" class="error"></span>
+
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label>Student Email</label>
                                                         <input type="email" name="email"
-                                                            value="<?= $student['email']; ?>" class="form-control"
-                                                            required>
+                                                            value="<?= $student['email']; ?>" class="form-control">
+                                                        <span id="editemailError" class="error"></span>
+
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label>Student Contact</label>
                                                         <input type="text" name="phone"
-                                                            value="<?= $student['phone']; ?>" class="form-control"
-                                                            minlength="10" maxlength="12" required>
+                                                            value="<?= $student['phone']; ?>" class="form-control">
+                                                        <span id="editphoneError" class="error"></span>
+
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label>Student Course</label>
                                                         <input type="text" name="course"
-                                                            value="<?= $student['course']; ?>" class="form-control"
-                                                            required>
+                                                            value="<?= $student['course']; ?>" class="form-control">
+                                                        <span id="editcourseError" class="error"></span>
+
                                                     </div>
 
                                                     <div class="mb-3">
@@ -259,9 +279,9 @@ include 'connection.php';
 
                         <!-- pagination code  -->
                         <div class="d-flex justify-content-center">
-                        <nav aria-label="...">
-                            <ul class="pagination pagination-sm">
-                                <?php
+                            <nav aria-label="...">
+                                <ul class="pagination pagination-sm">
+                                    <?php
                                 
                                 for ($i = 1; $i <= $totalPages; $i++) {
                                     echo '<li class="page-item' . ($page == $i ? ' active' : '') . '">';
@@ -269,8 +289,8 @@ include 'connection.php';
                                     echo '</li>';
                                 }
                                 ?>
-                            </ul>
-                        </nav>
+                                </ul>
+                            </nav>
                         </div>
                         <!-- end pagination -->
 
