@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS `student`(
     name VARCHAR(20) NOT NULL,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(12) NOT NULL,
-    course VARCHAR(255) NOT NULL
+    course VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL
 );

@@ -16,7 +16,6 @@ include 'connection.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="script.js"></script>
-    <script src="edit.js"></script>
 
     <title>Student Table</title>
 
@@ -47,7 +46,7 @@ include 'connection.php';
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="save_data.php" method="post" onsubmit="return validateForm()">
+                        <form action="save_data.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                             <div class="mb-3">
                                 <label>Student Name</label>
                                 <input type="text" name="name" class="form-control">
@@ -70,6 +69,12 @@ include 'connection.php';
                                 <label>Student Course</label>
                                 <input type="text" name="course" class="form-control">
                                 <span id="courseError" class="error"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Upload Image</label>
+                                <input type="file" name="image" class="form-control">
+                                <span id="imageError" class="error"></span>
                             </div>
 
                             <div class="mb-3">
@@ -104,6 +109,7 @@ include 'connection.php';
                                     <th>Student Email</th>
                                     <th>Student Phone</th>
                                     <th>Student Course</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -130,6 +136,7 @@ include 'connection.php';
                                     <td><?= $student['email']; ?></td>
                                     <td><?= $student['phone']; ?></td>
                                     <td><?= $student['course']; ?></td>
+                                    <td><img src = "<?= $student['image']; ?>" width="100" height="70"></td>
                                     <td>
                                         <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#viewModal<?= $student['id']; ?>">View</a>
@@ -187,6 +194,11 @@ include 'connection.php';
                                                         class="form-control" readonly>
                                                 </div>
 
+                                                <div class="mb-3">
+                                                    <label>Image</label>
+                                                    <img src="<?= $student['image']; ?>" alt="Student Image" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +219,7 @@ include 'connection.php';
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="save_data.php" method="post" onsubmit="return validateEditForm()">
+                                                <form action="save_data.php" method="post" enctype="multipart/form-data" name="editForm" onsubmit="return validateEditForm()">
 
                                                     <div class="mb-3">
                                                         <label>ID</label>
@@ -226,7 +238,7 @@ include 'connection.php';
 
                                                     <div class="mb-3">
                                                         <label>Student Email</label>
-                                                        <input type="email" name="email"
+                                                        <input type="text" name="email"
                                                             value="<?= $student['email']; ?>" class="form-control">
                                                         <span id="editemailError" class="error"></span>
 
@@ -245,6 +257,18 @@ include 'connection.php';
                                                         <input type="text" name="course"
                                                             value="<?= $student['course']; ?>" class="form-control">
                                                         <span id="editcourseError" class="error"></span>
+
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label>Current Image</label>
+                                                        <img src="<?= $student['image']; ?>" alt="Student Image" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label>Update Image</label>
+                                                        <input type="file" name="image" class="form-control">
 
                                                     </div>
 
@@ -299,10 +323,7 @@ include 'connection.php';
             </div>
         </div>
     </div>
-
-
-
-
+    
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
